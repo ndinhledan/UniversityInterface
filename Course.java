@@ -219,7 +219,6 @@ import java.io.IOException;
 	public void addWeightage(int exam, Map coursework){
 		this.exam = exam;
 		this.coursework = (HashMap<String, Integer>) coursework;
-		return 0;
 	}
 
 	/*

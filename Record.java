@@ -32,6 +32,13 @@ public class Record implements Serializable{
 		return student;
 	}
 
+	/*
+		*
+		*register a course for a student by adding it into register
+		*if course has no index then "lecture" is put in index
+		*
+	*/
+
 	public void addCourse (String course){
 		register.put(course, "Lecture");
 	}
@@ -39,6 +46,11 @@ public class Record implements Serializable{
 	public void addCourse(String course, String index){
 		register.put(course, index);
 	}
+	/*
+		*check if a student's record has a course registered
+		*if index is passed in index is checked to
+		*
+	*/
 
 	public Boolean existCourse(String course){
 		for (String c : register.keySet()){
@@ -56,6 +68,10 @@ public class Record implements Serializable{
 		return false;
 	}
 
+	/*
+		*return a list of course from a record
+	*/
+
 	public List getCourse(){
 		List<String> tmp = new ArrayList<String>();
 		if (register.size() == 0) return tmp;
@@ -64,6 +80,10 @@ public class Record implements Serializable{
 		}
 		return tmp;
 	}
+
+	/*
+		*add in exam mark for a record
+	*/
 
 	public void addExam(String course, int exam){
 		if (marks.get(course) == null){
@@ -77,6 +97,9 @@ public class Record implements Serializable{
 			marks.put(course, coursework);
 		}
 	}
+	/*
+		*check if exam mark has been added for this record or not
+	*/
 
 	public Boolean addedExam(String course){
 		Map<String, Integer> tmp = marks.get(course);
@@ -84,11 +107,18 @@ public class Record implements Serializable{
 		else return true;
 	}
 
+	/*
+		*return exam mark of a course from this record
+	*/
+
 	public int getExam(String course){
 		Map<String, Integer> tmp = marks.get(course);
 		return tmp.get("Exam");
 	}
 
+	/*
+		*add coursework mark for a course for this record
+	*/
 
 	public void addCoursework(String course, Map cw){
 		Map<String, Integer> coursework = (HashMap<String, Integer>) cw;
@@ -101,6 +131,10 @@ public class Record implements Serializable{
 		}
 	}
 
+	/*
+		*check if coursework mark for a course has been added or not
+	*/
+
 	public Boolean addedCoursework(String course){
 		Map<String, Integer> tmp = marks.get(course);
 		if (tmp == null) return false;
@@ -108,6 +142,9 @@ public class Record implements Serializable{
 		else return true;
 	}
 
+	/*	
+		*get all marks including exam and coursework
+	*/
 
 	public Map getMarks(String course){
 		return marks.get(course);

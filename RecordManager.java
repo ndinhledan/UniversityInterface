@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+/////Class to implement Record manager to control record class
+/////
+/////
+/////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,6 +21,7 @@ import java.io.IOException;
 public class RecordManager{
 	private List<Record> records = new ArrayList<Record>();
 
+	/*check if a record exist or not by student */
 	public Boolean existRecord (String student){
 		for (Record r : records){
 			if (student.equals(r.getStudent())) return true;
@@ -18,6 +29,10 @@ public class RecordManager{
 		return false;
 	}
 
+	/*find a record by student
+		@return record if found
+		@return null if not found
+	*/
 	public Record findRecord (String student){
 		for (Record r : records){
 			if (student.equals(r.getStudent())) return r;
@@ -25,6 +40,10 @@ public class RecordManager{
 		return null;
 	}
 
+
+	/*get a list of student who registered for a course
+		@return List
+	*/
 	public List getStudent(String course){
 		List<String> students = new ArrayList<String>();
 		for (Record rec : records){
@@ -33,6 +52,9 @@ public class RecordManager{
 		return students;
 	}
 
+	/*get a list of student who registered for this index of a course
+		@return List
+	*/
 	public List getStudent(String course, String index){
 		List<String> students = new ArrayList<String>();
 		for (Record rec : records){
@@ -41,12 +63,19 @@ public class RecordManager{
 		return students;
 	}
 
+	/*return all course registered by a student
+		@param student who this record belong to
+		@return List
+	*/
+
 	public List getCourse(String student){
 		return findRecord(student).getCourse();
 	}
 
 	/*
 		*
+		*add a course for a record
+		*if record not exist then create new record
 		@return 0: Success
 		@return 1: Student already register
 		*
@@ -62,7 +91,8 @@ public class RecordManager{
 	}
 
 	/*
-		*
+		*add a course for a record
+		*if record not exist then create new record
 		@return 0: Success
 		@return 1: Student already register
 		*
@@ -76,6 +106,14 @@ public class RecordManager{
 		if (!existRecord(student)) records.add(record);
 		return 0;
 	}
+
+	/* add exam mark for a record 
+		@return 1: input mismatch
+		@return 2: student not register to this course
+		@return 3: exam mark added already
+		@return 4: course does not have exam 
+		@return 0: success
+	*/
 
 	public int addExamMark(String student, Course course){
 		Scanner sc = new Scanner(System.in);
@@ -100,6 +138,14 @@ public class RecordManager{
 		rec.addExam(course.getCode(), grade);
 		return 0;
 	}
+
+	/* add coursework mark for a record 
+		@return 1: input mismatch
+		@return 2: student not register to this course
+		@return 3: exam mark added already
+		@return 4: course does not have coursework
+		@return 0: success
+	*/
 
 	public int addCourseworkMark(String student, Course course){
 		Record rec = findRecord(student);
@@ -129,6 +175,12 @@ public class RecordManager{
 		return 0;
 	}
 
+	/*return the overall grade of a record of a course
+		@param student: String - record belong to this student
+		@param course: course- course to get grade
+		@return double 
+	*/
+
 	public double getGrade(String student, Course course){
 		Record rec = findRecord(student);
 		Map<String, Integer> courseworkw = (HashMap<String, Integer>) course.getCourseworkWeightage();
@@ -153,6 +205,12 @@ public class RecordManager{
 		return result/20;
 	}
 
+	/*	
+		return Stats for a course
+		@param course: Course
+		@return Map
+		{student: {component: mark}}, include exam with component = "exam"
+	*/
 	public Map getStats(Course course){
 		Map<String, Map<String, Integer>> stats = new HashMap<String, Map<String, Integer>>();
 		for (Record rec : records){

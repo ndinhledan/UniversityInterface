@@ -443,6 +443,10 @@ public class University{
 			System.out.println(">>>>>>>>>>Exam marks of student " + studentManager.getName(matric) + " already added to course " +
 				code + "<<<<<<<<<<");
 		}
+		else if (check == 4){ //course does not have exam
+			System.out.println(">>>>>>>>>>Course " + code + " does not have exam " +
+			"<<<<<<<<<<");	
+		}
 		else if (check == -1){//unknown error
 			System.out.println(">>>>>>>>>>Error!<<<<<<<<<<<<");
 		}

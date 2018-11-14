@@ -146,6 +146,12 @@ public class CourseManager {
 		System.out.printf("\n\n\n");
 	}
 
+	/*
+		*
+		*Print course in a list of String course code 
+		*
+	*/
+
 	public void printCourse(List list){
 		if (list.size() == 0) return;
 		List<String> courses = (ArrayList<String>) list;
@@ -158,6 +164,8 @@ public class CourseManager {
 		}
 		System.out.printf("\n\n\n");
 	}
+
+	/*print a course's index and its respective vacancy*/
 
 	public void printIndex(String code3){
 		findCourse(code3).printIndex();
@@ -225,26 +233,28 @@ public class CourseManager {
 						break;
 				}
 			} while (choice1 <1 || choice1 >2);
-			do {
-				System.out.println("\n\n");
-				System.out.println("==========================================");
-				System.out.printf("Does %s have lab?\n", ccode);
-				System.out.println("1.Yes");
-				System.out.println("2.No");
-				System.out.print("Choice: ");
-				choice2 = sc.nextInt();
-				switch(choice2){
-					case 1:
-						lab = true;
-						break;
-					case 2:
-						lab = false;
-						break;
-					default:
-						System.out.println(">>>>>>>>>>Invalid choice!<<<<<<<<<<");
-						break;
-				}
-			} while (choice2 <1 || choice2 >2);
+			if (tut){
+				do {
+					System.out.println("\n\n");
+					System.out.println("==========================================");
+					System.out.printf("Does %s have lab?\n", ccode);
+					System.out.println("1.Yes");
+					System.out.println("2.No");
+					System.out.print("Choice: ");
+					choice2 = sc.nextInt();
+					switch(choice2){
+						case 1:
+							lab = true;
+							break;
+						case 2:
+							lab = false;
+							break;
+						default:
+							System.out.println(">>>>>>>>>>Invalid choice!<<<<<<<<<<");
+							break;
+					}
+				} while (choice2 <1 || choice2 >2);
+			}
 		} catch(InputMismatchException e){
 			System.out.println(">>>>>>>>>>Invalid Input!<<<<<<<<<");
 			return -1;
@@ -359,7 +369,7 @@ public class CourseManager {
 			return 2;
 		}
 		findCourse(course).addWeightage(exam, coursework);
-		return 0			
+		return 0;			
 	}
 
 	public void read(String file){
