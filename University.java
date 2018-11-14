@@ -515,7 +515,7 @@ public class University{
 		System.out.println("==========Transcript of student " + studentManager.getName(matric) + " =========");
 		for (String c : courseList){
 			if (recordManager.getGrade(matric, courseManager.findCourse(c)) != -1)
-				System.out.printf("Course %-10s Grade %.2f", c, recordManager.getGrade(matric, courseManager.findCourse(c)));
+				System.out.printf("Course %-10s Grade %.2f\n", c, recordManager.getGrade(matric, courseManager.findCourse(c)));
 		}
 		System.out.println("\n\n\n\n");
 	}

@@ -1,8 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
-/////Class to implement course manager object to control course object, includes 
-/////ArrayList of Courses
-/////Methods to add or find or print students
+/////Class to implement course manager object to control course object
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,8 +57,7 @@ public class CourseManager {
 
 	/*
 		*
-		@return 1: No vacancy
-		@return 2: No weightage added
+		*decrease the vacancy inside course and index
 		*
 	*/
 
@@ -68,18 +65,22 @@ public class CourseManager {
 		findCourse(course).register();
 	}
 
-	public int checkCourse(String code){
-		Course course = findCourse(code);
-		if (course.getExamWeightage() == 0 && course.getCourseworkWeightage().size() == 0) return 2;
-		if (course.getVacancy() == 0) return 1;
-		return 0;
-	}
-
-	
-
 	public void regCourse(String course, String index){
 		findCourse(course).register(index);
 	}
+
+	/*
+		*
+		*check if course can be registered yet
+		@return 1: no vacancy
+		@return 2: course has not added coursework weightage
+		@return 0: available
+		*
+	*/
+
+
+	
+
 
 	/*
 		*
@@ -89,6 +90,13 @@ public class CourseManager {
 		*
 	*/
 
+	public int checkCourse(String code){
+		Course course = findCourse(code);
+		if (course.getExamWeightage() == 0 && course.getCourseworkWeightage().size() == 0) return 2;
+		if (course.getVacancy() == 0) return 1;
+		return 0;
+	}
+
 	public int checkCourse(String code, String index){
 		Course course = findCourse(code);
 		if (course.getExamWeightage() == 0 && course.getCourseworkWeightage().size() == 0) return 2;
@@ -97,6 +105,10 @@ public class CourseManager {
 		if (course.getVacancy(index) == 0) return 1;
 		return 0;
 	}
+
+	/*
+		*check if a course has any student registered yet
+	*/
 
 	public Boolean isRegistered(String code){
 		return findCourse(code).isRegistered();
@@ -281,10 +293,10 @@ public class CourseManager {
 
 	/*
 		*
-		*method for adding weightage to course
+		*method for adding weightage to a course
 		*including exam weightage and coursework weightage
 		*allow exam to have 100% weightage or coursework to have 100% wieghtage
-		*call add exam and add weightage of course
+		*call add weightage of course
 		*
 		*@return an exit value
 		*0: sucessful
@@ -296,7 +308,58 @@ public class CourseManager {
 	*/
 
 	public int addWeightage(String course){
-		return findCourse(course).addWeightage();			
+		Scanner sc = new Scanner(System.in);
+		int sum =0;
+		int exam =0;
+		Map<String, Integer> coursework = new HashMap<String, Integer>();
+		String choice = "";
+		try {
+			if (findCourse(course).getCourseworkWeightage().size() > 0 || findCourse(course).getExamWeightage() > 0){ //coursework weightage already added
+					System.out.print("Coursework weightage for this course has already been added.\nDo you want to update it? (y/n): ");
+					choice = sc.nextLine();
+					if (choice.equals("n") || choice.equals("N")) return 3;
+					else if (choice.equals("y") || choice.equals("Y"));
+					else throw new InputMismatchException(">>>>>>>>>>>Please only type y or n!<<<<<<<<<<<\n\n\n");
+			}
+
+			System.out.print("Enter exam weightage(%): ");
+			exam = sc.nextInt();//take in exam weightage
+			if (exam <0 || exam >100){
+				throw new InputMismatchException(">>>>>>>>>>>Exam weightage cannot be negative or larger than 100!<<<<<<<<<<\n\n\n");
+			}
+			System.out.print("Enter number of component in coursework: ");
+			int compo = sc.nextInt();
+			if (compo < 0){
+				throw new InputMismatchException(">>>>>>>>>>Number of component cannot be negative!<<<<<<<<<<\n\n\n");
+			}
+			for (int i =0; i<compo; i++){
+				System.out.print("Enter component name: ");
+				String component = sc.next();//take in component of coursework name
+				System.out.print("Enter component weightage(%): ");
+				int weight = sc.nextInt();//take in the component's weightage
+				if (weight < 1 || weight > 100){
+					throw new InputMismatchException(">>>>>>>>>>>Component weightage cannot be negative or larger than 100!<<<<<<<<<<\n\n\n");
+				}
+				coursework.put(component, weight);
+			}
+		} catch(InputMismatchException e){
+			System.out.println(">>>>>>>>>>Invalic Input!<<<<<<<<<<");
+			System.out.println(e.getMessage());
+			return 1;
+		} catch(Exception e){
+			System.out.println(">>>>>>>>>>Error!<<<<<<<<<<");
+			return -1;
+		} 
+		// check if weighatge add up to 100%
+		for (int v : coursework.values()){
+			sum += v;
+		}
+
+		if (exam + sum != 100){
+			return 2;
+		}
+		findCourse(course).addWeightage(exam, coursework);
+		return 0			
 	}
 
 	public void read(String file){

@@ -156,7 +156,7 @@ public class RecordManager{
 	public Map getStats(Course course){
 		Map<String, Map<String, Integer>> stats = new HashMap<String, Map<String, Integer>>();
 		for (Record rec : records){
-			if (!rec.existCourse(course.getCode())) continue;
+			if (!rec.existCourse(course.getCode())) continue; 
 			if (!rec.addedCoursework(course.getCode()) || !rec.addedExam(course.getCode())) continue;
 			Map<String, Integer> courseworkg = (HashMap<String, Integer>) rec.getMarks(course.getCode());
 			stats.put(rec.getStudent(), courseworkg);
