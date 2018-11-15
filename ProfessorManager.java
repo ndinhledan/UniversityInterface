@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.io.Serializable;
 import java.io.IOException;
 
-public class ProfessorManager{
+public class ProfessorManager extends SerializeDB{
 	private List<Professor> profs = new ArrayList<Professor>();
 
 	/*
@@ -56,29 +56,7 @@ public class ProfessorManager{
 
 	public void read(){
 		String profFile = "Professor.dat";
-		try { // reading in data from files
-			profs = (ArrayList<Professor>) SerializeDB.readSerializedObject(profFile);
+			profs = (ArrayList<Professor>) super(profFile);
 			System.out.println("Professors read succssfullly");
-		} catch (IOException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	public void write(){
-		String profFile = "Professor.dat";
-		try {
-			SerializeDB.writeSerializedObject(profFile, profs);
-			System.out.println("Professors saved successfully");
-		}catch(IOException e){
-			System.out.println(">>>>>>>>>>File Professor Error<<<<<<<<<<");
-		}catch (Exception e){
-			e.printStackTrace();
-		}
 	}
 }

@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.io.Serializable;
 import java.io.IOException;
 
-public class StudentManager{
+public class StudentManager extends SerializeDB{
 	private List<Student> students = new ArrayList<Student>();
 
 	public Boolean isEmpty(){
@@ -119,28 +119,12 @@ public class StudentManager{
 	}
 
 	public void read(String file){
-		try { // reading in data from files
-			students = (ArrayList<Student>) SerializeDB.readSerializedObject(file);
-			System.out.println("Students read succssfullly");
-		} catch (IOException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		students = (ArrayList<Student>) super(file);
+		System.out.println("Students read succssfullly");
 	}
 
 	public void write(String file){
-		try {
-			SerializeDB.writeSerializedObject(file, students);
-			System.out.println("Student saved successfully");
-		}catch(IOException e){
-			System.out.println(">>>>>>>>>>File Student Error<<<<<<<<<<");
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+		super(file, students);
+		System.out.println("Student saved successfully");
 	}
 }

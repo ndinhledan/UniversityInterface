@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.io.Serializable;
 import java.io.IOException;
 
-public class RecordManager{
+public class RecordManager extends SerializeDB{
 	private List<Record> records = new ArrayList<Record>();
 
 	/*check if a record exist or not by student */
@@ -223,28 +223,12 @@ public class RecordManager{
 	}
 
 	public void read(String file){
-		try { // reading in data from files
-			records = (ArrayList<Record>) SerializeDB.readSerializedObject(file);
-			System.out.println("Records read succssfullly");
-		} catch (IOException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		records = (ArrayList<Record>) SerializeDB.readSerializedObject(file);
+		System.out.println("Records read succssfullly");
 	}
 
 	public void write(String file){
-		try {
-			SerializeDB.writeSerializedObject(file, records);
-			System.out.println("Records saved successfully");
-		}catch(IOException e){
-			System.out.println(">>>>>>>>>>File Records Error<<<<<<<<<<");
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+		super(file, records);
+		System.out.println("Records saved successfully");
 	}
 }

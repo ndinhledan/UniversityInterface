@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-public class SerializeDB
-{
-	public static List readSerializedObject(String filename) throws IOException, ClassNotFoundException{
+public class SerializeDB{
+	
+	public static List read(String filename) throws IOException, ClassNotFoundException{
 		List details = null;
 		FileInputStream fis = null;
 		ObjectInputStream in = null;
@@ -30,7 +30,7 @@ public class SerializeDB
 		return details;
 	}
 
-	public static void writeSerializedObject(String filename, List list) throws IOException{
+	public static void write(String filename, List list) throws IOException{
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		try {
@@ -45,7 +45,7 @@ public class SerializeDB
 		}
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		List list;
 		List list1;
 		List list2;
@@ -96,5 +96,5 @@ public class SerializeDB
 				e.printStackTrace();
 				System.out.println(e.getMessage());
 		}
-	}
+	}*/
 } 

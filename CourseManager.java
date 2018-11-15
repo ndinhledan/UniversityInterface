@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.io.IOException;
 
 
-public class CourseManager {
+public class CourseManager extends SerializeDB{
 	private List<Course> courses = new ArrayList<Course>();
 
 	private ProfessorManager profManager = new ProfessorManager();
@@ -372,30 +372,16 @@ public class CourseManager {
 		return 0;			
 	}
 
+	@Override
 	public void read(String file){
-		try { // reading in data from files
-			courses = (ArrayList<Course>) SerializeDB.readSerializedObject(file);
-			profManager.read();
-			System.out.println("Courses read succssfullly");
-		} catch (IOException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		courses = (ArrayList<Course>) super(file);
+		profManager.read();
+		System.out.println("Courses read succssfullly");
 	}
 
+	@Override
 	public void write(String file){
-		try {
-			SerializeDB.writeSerializedObject(file, courses);
-			System.out.println("Course saved successfully");
-		}catch(IOException e){
-			System.out.println(">>>>>>>>>>File Course Error<<<<<<<<<<");
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+		super(file, courses);
+		System.out.println("Course saved successfully");
 	}
 }
