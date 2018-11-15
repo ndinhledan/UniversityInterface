@@ -263,7 +263,6 @@ public class CourseManager extends SerializeDB{
 			return -1;
 		}
 		profManager.printProfessor();
-		System.out.println("Choose the course coordinator");
 		do{
 			try{ 
 				System.out.println("\n\n");
@@ -372,16 +371,24 @@ public class CourseManager extends SerializeDB{
 		return 0;			
 	}
 
-	@Override
 	public void read(String file){
-		courses = (ArrayList<Course>) super(file);
-		profManager.read();
-		System.out.println("Courses read succssfullly");
+		try{
+			courses = (ArrayList<Course>) readDB(file);
+			profManager.read();
+			System.out.println("Courses read succssfullly");
+		} catch (IOException e){
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e){
+			System.out.println(e.getMessage());
+		}
 	}
 
-	@Override
 	public void write(String file){
-		super(file, courses);
-		System.out.println("Course saved successfully");
+		try{
+			writeDB(file, courses);
+			System.out.println("Course saved successfully");
+		}catch (IOException e){
+			System.out.println(e.getMessage());
+		}
 	}
 }

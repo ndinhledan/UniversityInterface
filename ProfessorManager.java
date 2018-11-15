@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class ProfessorManager extends SerializeDB{
 	private List<Professor> profs = new ArrayList<Professor>();
+	private static final String profFile = "Professor.dat";
 
 	/*
 		*
@@ -49,14 +50,22 @@ public class ProfessorManager extends SerializeDB{
 
 	public void printProfessor(){
 		System.out.println("          ==========Professors=========");
+		System.out.printf("%-25s %23s", "Professor Name", "ID\n");
+		System.out.println("------------------------------------------------------");
+		
 		for (Professor p : profs){
-			System.out.println("Name: "+p.getName() + ", ID: "+p.getID());
+			System.out.printf("%-25s %25s \n" ,p.getName(), p.getID());
 		}
 	}
 
 	public void read(){
-		String profFile = "Professor.dat";
-			profs = (ArrayList<Professor>) super(profFile);
+		try{	
+			profs = (ArrayList<Professor>) readDB(profFile);
 			System.out.println("Professors read succssfullly");
+		} catch (IOException e){
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e){
+			System.out.println(e.getMessage());
+		}
 	}
 }

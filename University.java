@@ -26,9 +26,9 @@ public class University{
 	private StudentManager studentManager = new StudentManager();
 	private CourseManager courseManager = new CourseManager();
 	private RecordManager recordManager = new RecordManager();
-	private String studentFile = "Student.dat";
-	private String courseFile = "Course.dat";
-	private String recordFile = "Record.dat";
+	private static final String studentFile = "Student.dat";
+	private static final String courseFile = "Course.dat";
+	private static final String recordFile = "Record.dat";
 		
 	
 	public University(String name){
@@ -502,7 +502,7 @@ public class University{
 		Scanner sc = new Scanner(System.in);
 		if (studentManager.isEmpty()){
 			System.out.println(">>>>>>>>>>No student<<<<<<<<<<\n\n\n");
-			return;
+			return; 	
 		}
 		System.out.print("Enter student by matric: ");
 		String matric = sc.next();//take in student matric

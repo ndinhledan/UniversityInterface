@@ -223,12 +223,22 @@ public class RecordManager extends SerializeDB{
 	}
 
 	public void read(String file){
-		records = (ArrayList<Record>) SerializeDB.readSerializedObject(file);
-		System.out.println("Records read succssfullly");
+		try{
+			records = (ArrayList<Record>) readDB(file);
+			System.out.println("Records read succssfullly");
+		} catch (IOException e){
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e){
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void write(String file){
-		super(file, records);
-		System.out.println("Records saved successfully");
+		try{
+			writeDB(file, records);
+			System.out.println("Records saved successfully");
+		} catch (IOException e){
+			System.out.println(e.getMessage());
+		}
 	}
 }

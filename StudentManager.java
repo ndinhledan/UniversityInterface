@@ -29,8 +29,10 @@ public class StudentManager extends SerializeDB{
 	*/
 	public void printStudent(){
 		System.out.println("          =========List of students========");
+		System.out.printf("%-15s %30s", "Student Name", "Matric Number\n");
+		System.out.println("------------------------------------------------------");
 			for (Student s : students){
-				System.out.printf("Student name: %s, Matric Number: %s\n", s.getName(), s.getMatric());
+				System.out.printf("%-15s %27s\n", s.getName(), s.getMatric());
 		}
 		System.out.printf("\n\n\n");
 	}
@@ -39,9 +41,11 @@ public class StudentManager extends SerializeDB{
 		if (list.size() == 0) return;
 		List<String> students = (ArrayList<String>) list;
 		System.out.println("          =========List of students========");
+		System.out.printf("%-25s %30s", "Student Name", "Matric Number\n");
+		System.out.println("------------------------------------------------------");
 		for (String s : students){
 			Student student = findStudent(s);
-			System.out.printf("Student: %-20s Matric: %s\n", student.getName(), student.getMatric());
+			System.out.printf("%-25 %27s\n", student.getName(), student.getMatric());
 		}
 	}
 
@@ -119,12 +123,22 @@ public class StudentManager extends SerializeDB{
 	}
 
 	public void read(String file){
-		students = (ArrayList<Student>) super(file);
-		System.out.println("Students read succssfullly");
+		try{
+			students = (ArrayList<Student>) readDB(file);
+			System.out.println("Students read succssfullly");
+		} catch (IOException e){
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e){
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void write(String file){
-		super(file, students);
-		System.out.println("Student saved successfully");
+		try{
+			writeDB(file, students);
+			System.out.println("Student saved successfully");
+		} catch (IOException e){
+			System.out.println(e.getMessage());
+		}
 	}
 }
